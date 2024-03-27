@@ -5,13 +5,11 @@ import { Book } from "../entities/book.entity";
 const prisma = new PrismaClient();
 
 export class BookRepository {
-  async getAll(startIndex: number = 0, count: number = 5): Promise<Book[]> {
+  async getAll(startIndex: number, count: number): Promise<Book[]> {
     const booksFromPrisma = await prisma.book.findMany({
-      skip: startIndex,
-      take: count,
-      orderBy: { createdAt: "desc" }, // Mengambil item terbaru
+      skip: startIndex || 0,
+      take: count || 10,
     });
-
     return booksFromPrisma.map((book) => ({
       id: String(book.id),
       title: book.title,

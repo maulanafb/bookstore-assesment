@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axiosInstance from "@/lib/axiosInstance";
 import BookItem from "@/components/shared/BookItem";
 import Navbar from "@/components/shared/Navbar";
@@ -16,50 +16,81 @@ interface Book {
 
 const Home = () => {
   const [books, setBooks] = useState<Book[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [startIndex, setStartIndex] = useState<number>(0);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [fetching, setFetching] = useState<boolean>(false);
+  const footerRef = useRef<HTMLDivElement>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get<Book[]>("/api/v1/books", {
+        params: {
+          startIndex: startIndex, // Gunakan nilai terbaru dari startIndex
+          count: 5,
+        },
+      });
+
+      if (response.data.length === 0) {
+        setHasMore(false);
+      } else {
+        const uniqueNewBooks = response.data.filter(
+          (newBook) => !books.some((book) => book.id === newBook.id)
+        );
+
+        setBooks((prevBooks) => [...prevBooks, ...uniqueNewBooks]);
+        setStartIndex(startIndex + 5); // Perbarui startIndex
+      }
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    } finally {
+      setLoading(false);
+      setFetching(false);
+    }
+  };
+
+  const handleScroll = () => {
+    if (
+      footerRef.current &&
+      footerRef.current.getBoundingClientRect().top <= window.innerHeight &&
+      !fetching &&
+      hasMore
+    ) {
+      setFetching(true);
+    }
+  };
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        const response = await axiosInstance.get<Book[]>("/api/v1/books");
+    if (fetching) {
+      fetchData(); // Fetch data saat fetching berubah
+    }
+  }, [fetching]);
 
-        setBooks(response.data);
-        console.log(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchBooks();
-  }, []);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []); // Tambahkan event listener untuk event scroll
 
   return (
     <>
       <Navbar />
       <section className="min-h-svh mx-auto">
-        <div className="mx-auto items-center flex flex-col py-10">
-          <div>
-            <h1 className="text-title text-[80px] tracking-tighter max-sm:text-[25px] max-sm:font-bold">
-              Open Book, Open Your Mind.
-            </h1>
-          </div>
-          <div className="flex py-5">All Books</div>
-          {/* SearchInput component */}
-          <div className="flex justify-center w-[345px] md:w-[1200px] py-2">
-            {/* Your SearchInput component */}
-          </div>
-          <div className="mx-auto px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 max-sm:gap-x-4 md:gap-x-8 gap-y-8 mt-[20px] justify-center">
-            {/* Render BookItem component for each book */}
-            {books.map((book) => (
-              <BookItem key={book.id} book={book} />
-            ))}
-          </div>
+        <div className="mx-auto px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 max-sm:gap-x-4 md:gap-x-8 gap-y-8 mt-[20px] justify-center">
+          {books.map((book) => (
+            <BookItem key={book.id} book={book} />
+          ))}
+          {loading && (
+            <div className="col-span-full text-center">Loading...</div>
+          )}
+          {!loading && !hasMore && (
+            <p className="col-span-full text-center">No more books to load</p>
+          )}
         </div>
       </section>
-      <Footer />
+      <div ref={footerRef}>
+        <Footer />
+      </div>
     </>
   );
 };
