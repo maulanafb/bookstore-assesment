@@ -3,7 +3,12 @@ import { User } from "../entities/user.entity";
 import { UserRepository } from "../repositories/user.repository";
 import { AuthService } from "./auth.service";
 import { config } from "../config";
-
+interface PrismaUserSelection {
+  id: number;
+  name: string;
+  email: string;
+  points: number;
+}
 export class UserService {
   private userRepository: UserRepository;
   private authService: AuthService;
@@ -17,7 +22,7 @@ export class UserService {
     this.authService = new AuthService(JWT_SECRET);
   }
 
-  async getUserById(id: number): Promise<User | null> {
+  async getUserById(id: number): Promise<PrismaUserSelection | null> {
     return await this.userRepository.findById(id);
   }
 

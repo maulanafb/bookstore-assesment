@@ -17,11 +17,11 @@ const app = express();
 app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
-app.use(`${v1}/users`, userController);
 app.use(`${v1}/books`, bookController);
 app.use(`${v1}/orders`, authenticateJWT, orderController);
 app.use(`${v1}/login`, loginRouter);
 app.use(`${v1}/register`, registerRouter);
+app.use(`${v1}/fetch`, authenticateJWT, userController);
 
 app.use(`${v1}/api-docs`, swaggerUi.serve, swaggerUi.setup(specs));
 

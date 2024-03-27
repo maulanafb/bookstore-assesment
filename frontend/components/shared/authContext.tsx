@@ -28,21 +28,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
     if (authToken) {
       try {
-        const res = await fetch(
-          "http://192.168.18.33:8088/api/v1/users/fetch",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
+        const res = await fetch("http://localhost:8000/api/v1/fetch/user", {
+          method: "GET",
+          headers: {
+            Authorization: `bearer ${authToken}`,
+          },
+        });
 
         if (res.ok) {
           const userDataResponse = await res.json();
 
           // Jika struktur data adalah userData.data
-          const fetchedUserData = userDataResponse.data;
+          const fetchedUserData = userDataResponse;
 
           setUserData(fetchedUserData);
         } else {

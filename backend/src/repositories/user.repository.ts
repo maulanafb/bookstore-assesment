@@ -2,12 +2,23 @@ import { PrismaClient, User as PrismaUser } from "@prisma/client";
 import { User } from "../entities/user.entity";
 
 const prisma = new PrismaClient();
-
+interface PrismaUserSelection {
+  id: number;
+  name: string;
+  email: string;
+  points: number;
+}
 export class UserRepository {
-  async findById(id: number): Promise<PrismaUser | null> {
+  async findById(id: number): Promise<PrismaUserSelection | null> {
     return await prisma.user.findUnique({
       where: {
         id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        points: true,
       },
     });
   }

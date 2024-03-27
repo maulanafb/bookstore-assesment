@@ -6,7 +6,6 @@ import { SearchDialog } from "./SearchDialog";
 import { NavbarItem } from "./NavbarItem";
 import Image from "next/image";
 import { useAuth } from "./authContext";
-import { Book, BookAIcon } from "lucide-react";
 
 const Navbar = ({ user }: any) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,7 +32,7 @@ const Navbar = ({ user }: any) => {
         <div className="hidden lg:flex space-x-6 justify-center items-center">
           <Link
             href={"/"}
-            className="font-bold text-lg  px-2 py-1 rounded hover:bg-[#e6e8eb80]  transition-all duration-200"
+            className="font-bold text-lg  px-2 py-1 rounded hover:bg-[#e6e8eb80] hover:text-[#5cc081] transition-all duration-200"
           >
             BookStore
           </Link>
@@ -82,7 +81,7 @@ const Navbar = ({ user }: any) => {
                 loginMenu ? "absolute" : "hidden"
               } left-[130px] top-[50px] bg-white rounded-lg px-5 py-3 gap-5 tracking-tighter font-[400] text-[14px]`}
             >
-              <Link
+              {/* <Link
                 href="/my-books"
                 className="hover:text-gray-300 duration-300"
               >
@@ -93,12 +92,9 @@ const Navbar = ({ user }: any) => {
                 className="hover:text-gray-300 duration-300"
               >
                 Transaction History
-              </Link>
-              <Link
-                href="/settings"
-                className="hover:text-gray-300 duration-300"
-              >
-                Settings
+              </Link> */}
+              <Link href="/order" className="hover:text-gray-300 duration-300">
+                My Order
               </Link>
               <div
                 onClick={logout}
@@ -116,7 +112,7 @@ const Navbar = ({ user }: any) => {
               href="/auth"
               className="px-4 py-1 bg-primary rounded-md font-semibold text-white hover:bg-gray-800 transition-all duration-200"
             >
-              Get Started Here <span className="font-bold text-[15px]">→</span>
+              Get Started Free <span className="font-bold text-[15px]">→</span>
             </Link>
           </div>
         )}
@@ -161,13 +157,9 @@ const Navbar = ({ user }: any) => {
         </div>
         <Link
           href={"/"}
-          className="lg:hidden font-bold text-lg   rounded   transition-all duration-200"
+          className="lg:hidden font-bold text-lg   rounded  hover:text-[#5cc081] text-[#16a34a] transition-all duration-200"
         >
-          <Book
-            width={60}
-            height={40}
-            className="items-center bg-[#e6e8eb80] px-1 py-1 rounded-lg"
-          />
+          <Image src={"/logo-mobile.png"} width={40} height={40} alt="logo" />
         </Link>
 
         {userData ? (
@@ -225,21 +217,21 @@ const Navbar = ({ user }: any) => {
             <div className="flex justify-between">
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
                 Fullstack
               </Link>
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
                 FrontEnd
               </Link>
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
                 BackEnd
@@ -248,25 +240,25 @@ const Navbar = ({ user }: any) => {
           </div>
 
           <div className="flex flex-col tracking-tighter gap-4">
-            <h1 className="font-semibold tracking-tighter">books</h1>
+            <h1 className="font-semibold tracking-tighter">Courses</h1>
             <div className="flex justify-between">
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
-                All books
+                All Courses
               </Link>
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
                 Website
               </Link>
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
                 Mobile
@@ -279,21 +271,21 @@ const Navbar = ({ user }: any) => {
             <div className="flex justify-between">
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
                 Online
               </Link>
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
                 Offline
               </Link>
               <Link
                 onClick={closeMenus}
-                href={"/books"}
+                href={"/courses"}
                 className="flex flex-col bg-[#e6e8eb80] hover:bg-white border-[1px] rounded-xl p-4"
               >
                 Collaboration
@@ -359,13 +351,13 @@ const Navbar = ({ user }: any) => {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Link href={`/my-books`}>My books</Link>
+            <Link href={`/my-courses`}>My Courses</Link>
             <Link href={`/my-transactions`}>Transaction History</Link>
             <Link href={`/settings`}>Settings</Link>
             <a onClick={logout}>Logout</a>
           </div>
           <Link
-            href={"/books"}
+            href={"/courses"}
             className="w-full bg-primary text-white px-2 py-1 rounded-xl text-center flex items-end justify-center align-bottom"
           >
             Check our latest Promo !!!
