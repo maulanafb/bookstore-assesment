@@ -9,9 +9,8 @@ import Providers from "@/components/shared/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Coding Craft",
-  description:
-    "Embark on Your Future-Ready Journey: Learn High-Demand IT Skills Today.",
+  title: "Booksctore",
+  description: "Embark on Your Future-Ready Journey Today.",
 };
 
 export default function RootLayout({

@@ -116,7 +116,7 @@ const Navbar = ({ user }: any) => {
               href="/auth"
               className="px-4 py-1 bg-primary rounded-md font-semibold text-white hover:bg-gray-800 transition-all duration-200"
             >
-              Get Started Free <span className="font-bold text-[15px]">→</span>
+              Get Started Here <span className="font-bold text-[15px]">→</span>
             </Link>
           </div>
         )}

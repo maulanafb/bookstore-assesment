@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { BookService } from "../services/book.service";
+import { Book } from "../entities/book.entity";
 
 const router = express.Router();
 const bookService = new BookService();
@@ -16,7 +17,11 @@ const bookService = new BookService();
  */
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const books = await bookService.getAllBooks();
+    const startIndex = req.query.startIndex
+      ? parseInt(req.query.startIndex as string, 10)
+      : 0;
+    const count = req.query.count ? parseInt(req.query.count as string, 10) : 5;
+    const books: Book[] = await bookService.getAllBooks(startIndex, count);
     res.json(books);
   } catch (error) {
     next(error);

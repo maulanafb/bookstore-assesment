@@ -9,8 +9,11 @@ export class BookService {
     this.bookRepository = new BookRepository();
   }
 
-  async getAllBooks(): Promise<Book[]> {
-    return await this.bookRepository.getAll();
+  async getAllBooks(
+    startIndex: number = 0,
+    count: number = 5
+  ): Promise<Book[]> {
+    return await this.bookRepository.getAll(startIndex, count);
   }
 
   async getBookById(id: string): Promise<Book | null> {

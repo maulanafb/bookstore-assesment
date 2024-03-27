@@ -74,3 +74,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+.text-title {
+  @apply text-[46px] font-semibold tracking-tighter text-start leading-[40px];
+}
+
+.scrollbar-hided::-webkit-scrollbar {
+  width: 8px; /* Atur lebar scrollbar sesuai keinginan Anda */
+}
+
+.scrollbar-hided::-webkit-scrollbar-thumb {
+  background-color: rgb(206, 206, 206);
+  border-radius: 10px;
+  z-index: -10;
+}
+
+.scrollbar-hided::-webkit-scrollbar-track {
+  background-color: transparent;
+}
