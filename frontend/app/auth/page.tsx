@@ -27,7 +27,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { useRouter, useSearchParams } from "next/navigation";
 import { fetchUserData, useAuth } from "@/components/shared/authContext";
-// import Navbar from "@/components/shared/Navbar";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 
 const loginFormSchema = z
   .object({
@@ -179,7 +180,6 @@ export default function AuthPage() {
         // router.push("/"); // Redirect to the desired path after successful registration
       } else {
         if (res.status === 422) {
-          // Handle validation errors
           const errorData = await res.json();
           console.error("Registration failed:", errorData.error);
           toast("Validation error: " + errorData.error);
@@ -283,22 +283,6 @@ export default function AuthPage() {
                       <Button type="submit" className="w-full">
                         Login
                       </Button>
-                      <div className="flex items-center gap-2">
-                        <div className="flex-grow h-[1px] bg-gray-400"></div>
-                        <span className="text-gray-500 text-[14px]">
-                          login or register with google
-                        </span>
-                        <div className="flex-grow h-[1px] bg-gray-400"></div>
-                      </div>
-                      <a
-                        href="http://localhost:8088/api/v1/google-login"
-                        className="hover:bg-[#d6d6d6] px-3 py-1 bg-blue-500 rounded-lg flex items-center justify-center"
-                      >
-                        <svg className="w-4 h-4 fill-white" viewBox="0 0 16 16">
-                          <path d="M15.3 6.4c-.2-.6-.5-1-.9-1.3-.4-.3-.8-.5-1.3-.6-.9-.3-1.9-.3-2.9-.3-1 0-1.9.1-2.8.3-.6.2-1.2.5-1.8.8-.6.3-1.3.7-1.9 1.1-.6.4-1.2.9-1.8 1.4-.6.5-1.2 1-1.8 1.6-.6.6-1.2 1.3-1.8 2-.6.7-1.2 1.5-1.8 2.3-.5.9-1 1.9-1.5 2.9-.5 1-.9 2.1-1.3 3.2-.4 1.1-.7 2.3-1 3.4h15.3c.3-.9.6-1.8.9-2.8.3-1 .5-2 .7-3zm-13.3 2.9c0-.7.1-1.4.2-2 .1-.6.3-1.2.5-1.7.2-.5.5-1 .8-1.5.3-.5.7-1 .9-1.5.2-.5.4-1 .6-1.5.2-.5.3-1 .5-1.4.2-.4.4-.8.6-1.2.2-.4.3-.8.4-1.2.1-.4.2-.7.3-1 .1-.3.2-.6.3-.9.1-.3.2-.6.3-.8.1-.2.2-.4.3-.6.1-.2.2-.3.3-.5.1-.2.2-.3.3-.4.1-.1.2-.2.3-.3.1-.1.2-.2.3-.2.1 0 .2-.1.3-.1.1 0 .2 0 .3-.1.1 0 .2 0 .3.1.1.1.2.2.3.2.1.1.2.1.3.2.1 0 .2.1.3.1.1 0 .2 0 .3-.1.1-.1.2-.2.3-.2.1 0 .2-.1.3-.1.1 0 .2 0 .3.1z" />
-                        </svg>
-                        <span className="ml-2">Google</span>
-                      </a>
                     </div>
                   </form>
                 </Form>
@@ -342,7 +326,7 @@ export default function AuthPage() {
                       render={({ field }) => {
                         return (
                           <FormItem>
-                            <FormLabel>Fullname</FormLabel>
+                            <FormLabel>Username</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
@@ -413,6 +397,7 @@ export default function AuthPage() {
           </TabsContent>
         </Tabs>
       </main>
+      <Footer />
     </>
   );
 }
