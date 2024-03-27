@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// src/prisma/schema.prisma
+// src/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  password    String
+  points      Int      @default(100)
+  createdAt   DateTime @default(now()) // Tambahkan createdAt sesuai kebutuhan
+  // Definisikan relasi dengan model Order
+  orders      Order[]
+}
+
+model Book {
+  id          Int      @id @default(autoincrement())
+  title       String
+  writer      String
+  coverImage  String
+  price       Int
+  tags        String[]
+  createdAt   DateTime @default(now()) // Tambahkan createdAt sesuai kebutuhan
+  // Definisikan relasi dengan model Order
+  orders      Order[]
+}
+
+model Order {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  bookId      Int
+  orderDate   DateTime @default(now())
+  status      String   // "pending", "completed", "cancelled"
+  // Definisikan relasi dengan model User
+  user        User     @relation(fields: [userId], references: [id])
+  // Definisikan relasi dengan model Book
+  book        Book     @relation(fields: [bookId], references: [id])
+}
