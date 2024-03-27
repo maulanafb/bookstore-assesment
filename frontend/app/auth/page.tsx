@@ -102,7 +102,7 @@ export default function AuthPage() {
   });
   const handleLogin = async (values: z.infer<typeof loginFormSchema>) => {
     try {
-      const res = await fetch("http://192.168.18.33:8088/api/v1/sessions", {
+      const res = await fetch("http://localhost:8000/api/v1/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -115,10 +115,10 @@ export default function AuthPage() {
 
       if (res.ok) {
         const data = await res.json();
-        console.log(data.data);
+        console.log(data.accessToken);
 
         // Set the cookie on successful login
-        Cookies.set("CC_COOKIES", data.data.token, {
+        Cookies.set("CC_COOKIES", data.accessToken, {
           expires: 7,
           // path: "/",
         });
@@ -150,7 +150,7 @@ export default function AuthPage() {
     values: z.infer<typeof registerFormSchema>
   ) => {
     try {
-      const res = await fetch("http://localhost:8088/api/v1/users", {
+      const res = await fetch("http://localhost:8000/api/v1/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -167,7 +167,7 @@ export default function AuthPage() {
         const data = await res.json();
         console.log(data);
         // Set the cookie on successful registration
-        Cookies.set("CC_COOKIES", data.data.token, {
+        Cookies.set("CC_COOKIES", data.accessToken, {
           expires: 7,
           // path: "/",
         });
