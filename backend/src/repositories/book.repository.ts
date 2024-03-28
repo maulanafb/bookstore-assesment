@@ -5,11 +5,23 @@ import { Book } from "../entities/book.entity";
 const prisma = new PrismaClient();
 
 export class BookRepository {
-  async getAll(startIndex: number, count: number): Promise<Book[]> {
+  async getAll(
+    query: string,
+    startIndex: number,
+    count: number
+  ): Promise<Book[]> {
     const booksFromPrisma = await prisma.book.findMany({
+      where: {
+        OR: [
+          { title: { contains: query } },
+          { writer: { contains: query } },
+          { tags: { hasSome: [query] } },
+        ],
+      },
       skip: startIndex || 0,
       take: count || 10,
     });
+
     return booksFromPrisma.map((book) => ({
       id: String(book.id),
       title: book.title,

@@ -14,25 +14,44 @@ interface Book {
   price: number;
   tags: string[];
 }
-export type BookItem = JSX.Element;
 
-function LoadMore() {
+function LoadMore({
+  query,
+  onQueryChange,
+}: {
+  query: string;
+  onQueryChange: (newQuery: string) => void;
+}) {
   const { ref, inView } = useInView();
   const [data, setData] = useState<Book[]>([]);
   const [hasMoreData, setHasMoreData] = useState<boolean>(true);
 
   useEffect(() => {
-    if (inView && hasMoreData) {
-      fetchBook(page).then((res) => {
+    const fetchDataAsync = async () => {
+      try {
+        const res = await fetchBook(page, query);
         if (res.length > 0) {
           setData([...data, ...res]);
           page += 5;
         } else {
           setHasMoreData(false);
         }
-      });
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    if (inView && hasMoreData) {
+      fetchDataAsync();
+      console.log("queryberubah");
     }
-  }, [inView, data, hasMoreData]);
+  }, [inView, query]);
+
+  useEffect(() => {
+    setData([]); // Reset data when query changes
+    page = 5; // Reset page number
+    setHasMoreData(true); // Reset hasMoreData
+  }, [query]); // Triggered when query changes
 
   return (
     <>
@@ -41,7 +60,7 @@ function LoadMore() {
       ))}
       {hasMoreData ? (
         <section className="flex justify-center items-center w-full">
-          <div ref={ref}>
+          <div ref={ref} className="col-span-full">
             <Image
               src="./spinner.svg"
               alt="spinner"

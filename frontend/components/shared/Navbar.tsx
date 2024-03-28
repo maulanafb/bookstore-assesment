@@ -6,6 +6,7 @@ import { SearchDialog } from "./SearchDialog";
 import { NavbarItem } from "./NavbarItem";
 import Image from "next/image";
 import { useAuth } from "./authContext";
+import { BookIcon } from "lucide-react";
 
 const Navbar = ({ user }: any) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -159,7 +160,7 @@ const Navbar = ({ user }: any) => {
           href={"/"}
           className="lg:hidden font-bold text-lg   rounded  hover:text-[#5cc081] text-[#16a34a] transition-all duration-200"
         >
-          <Image src={"/logo-mobile.png"} width={40} height={40} alt="logo" />
+          <BookIcon />
         </Link>
 
         {userData ? (

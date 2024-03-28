@@ -17,11 +17,16 @@ const bookService = new BookService();
  */
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const query = req.query.query ? String(req.query.query) : "";
     const startIndex = req.query.startIndex
       ? parseInt(req.query.startIndex as string, 10)
       : 0;
     const count = req.query.count ? parseInt(req.query.count as string, 10) : 5;
-    const books: Book[] = await bookService.getAllBooks(startIndex, count);
+    const books: Book[] = await bookService.getAllBooks(
+      query,
+      startIndex,
+      count
+    ); // Panggil fungsi getAll dari bookService
     res.json(books);
   } catch (error) {
     next(error);

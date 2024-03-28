@@ -1,8 +1,5 @@
 "use server";
 
-import BookItem from "@/components/shared/BookItem";
-import BookItem2 from "@/components/shared/BookItem2";
-
 interface Book {
   id: string;
   title: string;
@@ -12,13 +9,13 @@ interface Book {
   tags: string[];
 }
 
-export const fetchBook = async (startIndex: number) => {
+export const fetchBook = async (startIndex: number, query: string) => {
   const res = await fetch(
-    `http://localhost:8000/api/v1/books?startIndex=${startIndex}&count=5`
+    `http://localhost:8000/api/v1/books?startIndex=${startIndex}&count=5&query=${query}`
   );
 
   const data = await res.json();
-  console.log(startIndex);
+  // console.log(data);
   //   return data;
   return data;
 };

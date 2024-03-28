@@ -4,6 +4,7 @@ import BookItem from "@/components/shared/BookItem";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { useInView } from "react-intersection-observer";
+import { SearchInput } from "@/components/shared/SearchInput";
 
 interface Book {
   id: string;
@@ -59,6 +60,13 @@ const Home = () => {
     <>
       <Navbar />
       <section className="min-h-svh mx-auto">
+        <div>
+          <h1 className="text-title text-[100px]">Unlock Your Skill&rsquo;s</h1>
+        </div>
+        <div className="flex py-5 ">All Courses</div>
+        <div className="flex justify-center w-[345px] md:w-[1200px] py-2">
+          <SearchInput onSearch={() => {}} query="" />
+        </div>
         <div className="mx-auto px-5 grid grid-cols-2 mb-10 md:grid-cols-3 lg:grid-cols-5 max-sm:gap-x-4 md:gap-x-8 gap-y-8 mt-[20px] justify-center">
           {books.map((book) => (
             <BookItem key={book.id} book={book} />

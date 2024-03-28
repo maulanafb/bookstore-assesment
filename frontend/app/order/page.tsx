@@ -7,7 +7,6 @@ import { fetchOrder } from "./action";
 import Link from "next/link";
 import BookOrderItem from "@/components/shared/BookOrderItem";
 import { Book, BookItemProps, Order } from "../types/bookOrder";
-import { BookItem } from "@/components/shared/LoadMore";
 import LoadMoreOrder from "@/components/shared/LoadMoreOrder";
 
 const MyOrder = () => {

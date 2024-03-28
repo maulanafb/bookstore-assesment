@@ -10,10 +10,11 @@ export class BookService {
   }
 
   async getAllBooks(
+    query: string,
     startIndex: number = 0,
     count: number = 5
   ): Promise<Book[]> {
-    return await this.bookRepository.getAll(startIndex, count);
+    return await this.bookRepository.getAll(query, startIndex, count);
   }
 
   async getBookById(id: string): Promise<Book | null> {
