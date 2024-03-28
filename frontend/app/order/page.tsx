@@ -6,24 +6,34 @@ import React, { useEffect, useState } from "react";
 import { fetchOrder } from "./action";
 import Link from "next/link";
 import BookOrderItem from "@/components/shared/BookOrderItem";
-import { Book, BookItemProps, Order } from "../types/bookOrder";
+import { Order } from "../types/bookOrder";
 import LoadMoreOrder from "@/components/shared/LoadMoreOrder";
+import { SearchInput } from "@/components/shared/SearchInput";
 
 const MyOrder = () => {
-  const [booksData, setbooksData] = useState<Order[] | null>(null);
-  console.log(booksData);
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      try {
-        const data = await fetchOrder(0);
-        setbooksData(data);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
+  const [ordersData, setOrdersData] = useState<Order[] | null>(null);
+  const [query, setQuery] = useState("");
 
+  useEffect(() => {
     fetchDataAsync();
-  }, []);
+  }, [query]);
+
+  const fetchDataAsync = async () => {
+    try {
+      const data = await fetchOrder(0, query);
+      setOrdersData(data);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
+
+  const handleSearch = (searchQuery: string) => {
+    setQuery(searchQuery);
+  };
+
+  const handleQueryChange = (newQuery: string) => {
+    setQuery(newQuery);
+  };
 
   return (
     <>
@@ -34,21 +44,25 @@ const MyOrder = () => {
         <div className="flex flex-col gap-10 max-md:">
           <div className="flex flex-col gap-5">
             <h1 className="max-lg:justify-center text-[36px] text-gray-700 font-bold tracking-tighter text-center lg:text-start leading-[40px] relative">
-              My Order
+              Order List
             </h1>
             <p className="max-w-md text-gray-500">
               A bookstore is a place where you can find a world of stories
               waiting to be discovered.
             </p>
+            {/* SearchInput untuk melakukan pencarian */}
+            <SearchInput query={query} onSearch={handleSearch} />
           </div>
           <div
             className={`grid ${
-              booksData && booksData.length > 0 ? "grid-cols-4" : "grid-cols-1"
+              ordersData && ordersData.length > 0
+                ? "grid-cols-2 lg:grid-cols-4"
+                : "grid-cols-1"
             }  gap-5`}
           >
-            {/* map over booksData and render each course */}
-            {booksData && booksData.length > 0 ? (
-              booksData.map((order: Order) => (
+            {/* map over ordersData dan render setiap order */}
+            {ordersData && ordersData.length > 0 ? (
+              ordersData.map((order: Order) => (
                 <BookOrderItem
                   userId={order.userId}
                   book={order.book}
@@ -72,7 +86,8 @@ const MyOrder = () => {
                 </Link>
               </div>
             )}
-            <LoadMoreOrder />
+            {/* LoadMoreOrder dengan query yang diperbarui */}
+            <LoadMoreOrder query={query} />
           </div>
         </div>
       </section>

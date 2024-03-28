@@ -23,10 +23,21 @@ export class OrderRepository {
   async getOrdersByUserId(
     reqUserId: number | undefined,
     offset: number,
-    limit: number
+    limit: number,
+    searchQuery?: string
   ): Promise<Order[]> {
+    const searchCriteria: any = { userId: reqUserId };
+
+    if (searchQuery) {
+      searchCriteria.OR = [
+        { book: { title: { contains: searchQuery, mode: "insensitive" } } },
+        { book: { writer: { contains: searchQuery, mode: "insensitive" } } },
+        // Tambahkan kriteria pencarian lainnya sesuai kebutuhan
+      ];
+    }
+
     return await prisma.order.findMany({
-      where: { userId: reqUserId },
+      where: searchCriteria, // Gunakan kriteria pencarian
       include: {
         book: true, // Include data from the related Book model
       },

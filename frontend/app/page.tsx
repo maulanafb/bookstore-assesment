@@ -40,7 +40,7 @@ function Home() {
   };
 
   const handleQueryChange = (newQuery: string) => {
-    setQuery(newQuery); // Mengubah query ketika ada perubahan
+    setQuery(newQuery);
   };
 
   return (

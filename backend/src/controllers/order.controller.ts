@@ -139,11 +139,13 @@ router.put("/:orderId", async (req: Request, res: Response) => {
 router.get("/", async (req: Request, res: Response) => {
   const userId = req.user?.id;
   const { offset, limit } = req.query;
+  const query = req.query.query ? String(req.query.query) : "";
   try {
     const orders = await orderService.getOrdersByUserId(
       userId,
       Number(offset),
-      Number(limit)
+      Number(limit),
+      query
     );
     res.status(200).json(orders);
   } catch (error) {

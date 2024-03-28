@@ -15,9 +15,15 @@ export class OrderService {
   async getOrdersByUserId(
     userId: number | undefined,
     offset: number,
-    limit: number
+    limit: number,
+    searchQuery: string
   ): Promise<Order[]> {
     // Panggil fungsi dari repository untuk mendapatkan pesanan berdasarkan userId
-    return await orderRepository.getOrdersByUserId(userId, offset, limit);
+    return await orderRepository.getOrdersByUserId(
+      userId,
+      offset,
+      limit,
+      searchQuery
+    );
   }
 }

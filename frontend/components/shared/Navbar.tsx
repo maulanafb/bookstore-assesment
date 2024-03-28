@@ -20,11 +20,9 @@ const Navbar = ({ user }: any) => {
     setIsMenuAccountOpen(false);
   };
   const logout = () => {
-    // Hapus cookie dengan nama CC_COOKIES
     document.cookie =
       "CC_COOKIES=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-    // Merefresh halaman
     location.reload();
   };
   return (
@@ -41,7 +39,7 @@ const Navbar = ({ user }: any) => {
           <div
             className={`lg:flex items-center  font-[500] tracking-tight text-[14px] hidden `}
           >
-            <NavbarItem />
+            {/* <NavbarItem /> */}
             <div className="flex ">
               <a
                 href=""
@@ -343,22 +341,27 @@ const Navbar = ({ user }: any) => {
                 <div className="font-semibold text-[20px] capitalize">
                   {userData?.name}
                 </div>
-                <div>Fullstack-Developer</div>
+                <div>
+                  You Have{" "}
+                  <span className="text-[#fa5d29]">
+                    {userData?.points} Points
+                  </span>
+                </div>
               </div>
             </div>
             <div className="px-2 py-1 rounded-xl bg-primary text-white font-bold text-[14px]">
-              PRO
+              MEMBER
             </div>
           </div>
 
           <div className="flex flex-col gap-3">
-            <Link href={`/my-courses`}>My Courses</Link>
-            <Link href={`/my-transactions`}>Transaction History</Link>
-            <Link href={`/settings`}>Settings</Link>
+            <Link href={`/order`}>My Orders</Link>
+            {/* <Link href={`/my-transactions`}>Transaction History</Link>
+            <Link href={`/settings`}>Settings</Link> */}
             <a onClick={logout}>Logout</a>
           </div>
           <Link
-            href={"/courses"}
+            href={"/"}
             className="w-full bg-primary text-white px-2 py-1 rounded-xl text-center flex items-end justify-center align-bottom"
           >
             Check our latest Promo !!!
