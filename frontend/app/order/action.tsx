@@ -1,20 +1,15 @@
-"use client";
 import Cookies from "js-cookie";
+import { DummyOrder } from "./_data";
 
 export const fetchOrder = async (startIndex: number, query: string) => {
-  const authToken = Cookies.get("CC_COOKIES");
-  console.log(authToken);
-  const res = await fetch(
-    `http://localhost:8000/api/v1/orders?offset=${startIndex}&limit=5&query=${query}`,
-    {
-      headers: {
-        Authorization: `bearer ${authToken}`,
-      },
-    }
+  // Simulate delay to mimic async behavior
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  // Filter data based on the query
+  const filteredData = DummyOrder.filter((order) =>
+    order.book.title.toLowerCase().includes(query.toLowerCase())
   );
 
-  const data = await res.json();
-  console.log(data);
-  //   return data;
-  return data;
+  // Return data starting from the specified index
+  return filteredData.slice(startIndex, startIndex + 5);
 };

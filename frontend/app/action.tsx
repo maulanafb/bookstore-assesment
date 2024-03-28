@@ -1,5 +1,7 @@
 "use server";
 
+import { DummyBook } from "./_data";
+
 interface Book {
   id: string;
   title: string;
@@ -9,13 +11,18 @@ interface Book {
   tags: string[];
 }
 
-export const fetchBook = async (startIndex: number, query: string) => {
-  const res = await fetch(
-    `http://localhost:8000/api/v1/books?startIndex=${startIndex}&count=5&query=${query}`
+export const fetchBook = async (
+  startIndex: number,
+  query: string
+): Promise<Book[]> => {
+  // Simulate delay to mimic async behavior
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  // Filter data based on the query
+  const filteredData = DummyBook.filter((book) =>
+    book.title.toLowerCase().includes(query.toLowerCase())
   );
 
-  const data = await res.json();
-  // console.log(data);
-  //   return data;
-  return data;
+  // Return data starting from the specified index
+  return filteredData.slice(startIndex, startIndex + 5);
 };

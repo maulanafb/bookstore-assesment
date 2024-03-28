@@ -1,4 +1,3 @@
-"use client";
 import { fetchOrder } from "@/app/order/action";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -7,8 +6,6 @@ import BookOrderItem from "./BookOrderItem";
 import { Order } from "@/app/types/bookOrder";
 
 let page = 5;
-
-export type BookItem = JSX.Element;
 
 function LoadMoreOrder({ query }: { query: string }) {
   const { ref, inView } = useInView();
@@ -20,7 +17,12 @@ function LoadMoreOrder({ query }: { query: string }) {
       try {
         const res = await fetchOrder(page, query);
         if (res.length > 0) {
-          setData([...data, ...res]);
+          // Clear existing data if it's a new search query
+          if (page === 5) {
+            setData(res);
+          } else {
+            setData([...data, ...res]);
+          }
           page += 5;
         } else {
           setHasMoreData(false);
@@ -36,8 +38,7 @@ function LoadMoreOrder({ query }: { query: string }) {
     console.log(data);
   }, [inView, query]);
 
-  // Fungsi untuk merender komponen BookOrderItem
-
+  // Function to render BookOrderItem components
   return (
     <>
       {data.map((item: Order) => (
@@ -64,7 +65,7 @@ function LoadMoreOrder({ query }: { query: string }) {
           </div>
         </section>
       ) : (
-        // Tampilkan pesan jika tidak ada lagi data yang tersedia
+        // Display a message if no more data is available
         <p className="text-center text-gray-500 mt-4 mb-10 block col-span-full">
           No more data
         </p>

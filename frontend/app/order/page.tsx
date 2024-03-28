@@ -9,6 +9,7 @@ import BookOrderItem from "@/components/shared/BookOrderItem";
 import { Order } from "../types/bookOrder";
 import LoadMoreOrder from "@/components/shared/LoadMoreOrder";
 import { SearchInput } from "@/components/shared/SearchInput";
+import LoadMoreOrderCopy from "@/components/shared/LoadMoreOrder_backup";
 
 const MyOrder = () => {
   const [ordersData, setOrdersData] = useState<Order[] | null>(null);
@@ -21,6 +22,7 @@ const MyOrder = () => {
   const fetchDataAsync = async () => {
     try {
       const data = await fetchOrder(0, query);
+      console.log(data);
       setOrdersData(data);
     } catch (error) {
       console.error("Failed to fetch data:", error);
@@ -86,8 +88,10 @@ const MyOrder = () => {
                 </Link>
               </div>
             )}
-            {/* LoadMoreOrder dengan query yang diperbarui */}
-            <LoadMoreOrder query={query} />
+            <LoadMoreOrderCopy
+              query={query}
+              onQueryChange={handleQueryChange}
+            />
           </div>
         </div>
       </section>

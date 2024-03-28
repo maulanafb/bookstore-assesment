@@ -12,9 +12,9 @@ export interface Order {
   id: number;
   userId: number;
   bookId: number;
-  orderDate: string; // Assuming orderDate is a date string
-  status: "cancelled" | "pending" | "completed";
-  book: Book; // Embed the Book type directly
+  orderDate: string;
+  status: string;
+  book: Book;
 }
 
 export interface BookItemProps {

@@ -66,7 +66,6 @@ function Home() {
           <LoadMore query={query} onQueryChange={handleQueryChange} />{" "}
         </div>
       </section>
-
       <Footer />
     </>
   );

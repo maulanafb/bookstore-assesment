@@ -16,7 +16,7 @@ interface Order {
   userId: number;
   bookId: number;
   orderDate: string;
-  status: "cancelled" | "pending" | "completed";
+  status: string;
   book: Book;
 }
 
@@ -53,6 +53,13 @@ const BookOrderItem: React.FC<Order> = (order) => {
           <div className="flex items-center gap-2">
             <span className="text-[#fa5d29] font-bold tracking-tighter animate-blink">
               {order.book.price} Points
+            </span>
+          </div>
+        </div>
+        <div className="flex max-sm:px-1 max-sm:py-1 px-3 py-2 justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium tracking-tighter">
+              {order.book.tags.map((tag) => `#${tag}, `)}
             </span>
           </div>
         </div>

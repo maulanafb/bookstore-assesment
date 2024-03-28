@@ -4,10 +4,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import BookOrderItem from "./BookOrderItem";
+import { Order } from "@/app/types/bookOrder";
 
 let page = 5; // Ubah page menjadi 1, karena biasanya dimulai dari halaman pertama
 export type BookItem = JSX.Element;
-function LoadMoreOrder({
+function LoadMoreOrderCopy({
   query,
   onQueryChange,
 }: {
@@ -15,7 +16,7 @@ function LoadMoreOrder({
   onQueryChange: (newQuery: string) => void;
 }) {
   const { ref, inView } = useInView();
-  const [data, setData] = useState<BookItem[]>([]);
+  const [data, setData] = useState<Order[]>([]);
   const [hasMoreData, setHasMoreData] = useState<boolean>(true);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ function LoadMoreOrder({
         const res = await fetchOrder(page, query);
         if (res.length > 0) {
           setData([...data, ...res]);
-          page += 1; // Tambah 1 ke halaman setelah memuat data
+          page += 5; // Tambah 1 ke halaman setelah memuat data
         } else {
           setHasMoreData(false);
         }
@@ -80,4 +81,4 @@ function LoadMoreOrder({
   );
 }
 
-export default LoadMoreOrder;
+export default LoadMoreOrderCopy;

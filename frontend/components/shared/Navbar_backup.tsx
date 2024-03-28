@@ -8,12 +8,11 @@ import Image from "next/image";
 import { useAuth } from "./authContext";
 import { BookIcon } from "lucide-react";
 
-const Navbar = ({ user }: any) => {
+const NavbarBackup = ({ user }: any) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuAccountOpen, setIsMenuAccountOpen] = useState(false);
   const [loginMenu, setLoginMenu] = useState(false);
-  // const { userData } = useAuth();
-  const userData = true;
+  const { userData } = useAuth();
 
   console.log(userData);
   const closeMenus = () => {
@@ -66,9 +65,14 @@ const Navbar = ({ user }: any) => {
               onClick={() => setLoginMenu(!loginMenu)}
             >
               <div className="flex flex-col">
-                <div className="font-[600] text-[16px]">Halo, John Doe</div>
+                <div className="font-[600] text-[16px]">
+                  Halo, {userData.name}
+                </div>
                 <div className="font-[500] tracking-tighter ">
-                  You Have, <span className="text-[#fa5d29]">100 Points</span>
+                  You Have,{" "}
+                  <span className="text-[#fa5d29]">
+                    {userData.points} Points
+                  </span>
                 </div>
               </div>
 
@@ -343,10 +347,13 @@ const Navbar = ({ user }: any) => {
               />
               <div className="flex flex-col">
                 <div className="font-semibold text-[20px] capitalize">
-                  Jon Doe
+                  {userData?.name}
                 </div>
                 <div>
-                  You Have <span className="text-[#fa5d29]">100 Points</span>
+                  You Have{" "}
+                  <span className="text-[#fa5d29]">
+                    {userData?.points} Points
+                  </span>
                 </div>
               </div>
             </div>
@@ -381,4 +388,4 @@ const Navbar = ({ user }: any) => {
   );
 };
 
-export default Navbar;
+export default NavbarBackup;
