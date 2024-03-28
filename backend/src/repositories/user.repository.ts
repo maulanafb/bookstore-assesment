@@ -9,6 +9,16 @@ interface PrismaUserSelection {
   points: number;
 }
 export class UserRepository {
+  async updatePoints(userId: number, points: number): Promise<void> {
+    try {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { points: points },
+      });
+    } catch (error) {
+      throw new Error(`Failed to update user points`);
+    }
+  }
   async findById(id: number): Promise<PrismaUserSelection | null> {
     return await prisma.user.findUnique({
       where: {

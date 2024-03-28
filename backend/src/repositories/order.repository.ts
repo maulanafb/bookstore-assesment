@@ -13,13 +13,24 @@ export class OrderRepository {
     });
   }
 
-  async cancelOrder(orderId: number): Promise<Order> {
-    return await prisma.order.update({
+  async cancelOrder(orderId: number): Promise<Order | null> {
+    try {
+      const order = await prisma.order.update({
+        where: { id: orderId },
+        data: { status: "cancelled" },
+      });
+      return order;
+    } catch (error) {
+      console.error("Error cancelling order:", error);
+      throw new Error("Failed to cancel order");
+    }
+  }
+  async getById(orderId: number): Promise<Order | null> {
+    return await prisma.order.findUnique({
       where: { id: orderId },
-      data: { status: "cancelled" },
+      include: { book: true },
     });
   }
-
   async getOrdersByUserId(
     reqUserId: number | undefined,
     offset: number,

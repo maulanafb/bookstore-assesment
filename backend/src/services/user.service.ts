@@ -39,10 +39,8 @@ export class UserService {
     if (existingUser) {
       throw new Error("Email is already registered");
     }
-
     // Hash the password
     const hashedPassword = await this.hashPassword(password);
-
     // Create new user
     const newUser: User = {
       name,
@@ -51,10 +49,7 @@ export class UserService {
       points: 100,
     };
     const createdUser = await this.userRepository.createUser(newUser);
-
-    // Generate JWT token
     const accessToken = this.authService.generateToken(createdUser);
-
     // Return user data without password and access token separately
     return { user: { ...createdUser, password: "" }, accessToken };
   }

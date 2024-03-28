@@ -1,9 +1,13 @@
 import { Request, Response, Router } from "express";
 import { OrderService } from "../services/order.service";
+import { UserService } from "../services/user.service";
+import { BookService } from "../services/book.service";
+import { OrderRepository } from "../repositories/order.repository";
 
 const router = Router();
 const orderService = new OrderService();
-
+const userService = new UserService();
+const bookService = new BookService();
 /**
  * @swagger
  * /api/v1/orders:
@@ -42,9 +46,22 @@ const orderService = new OrderService();
  */
 router.post("/", async (req: Request, res: Response) => {
   const userId = req.user?.id;
-  console.log(req.user);
   const { bookId } = req.body;
   try {
+    const book = await bookService.getBookById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    const user = await userService.getUserById(userId!);
+    if (!user) {
+      throw "User not found";
+    }
+
+    if (user.points < book.price) {
+      return res.status(400).json({ message: "Insufficient points" });
+    }
+
     const order = await orderService.createOrder(userId!, bookId);
     res.status(201).json(order);
   } catch (error) {
