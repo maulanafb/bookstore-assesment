@@ -13,8 +13,8 @@ export class BookRepository {
     const booksFromPrisma = await prisma.book.findMany({
       where: {
         OR: [
-          { title: { contains: query } },
-          { writer: { contains: query } },
+          { title: { contains: query, mode: "insensitive" } },
+          { writer: { contains: query, mode: "insensitive" } },
           { tags: { hasSome: [query] } },
         ],
       },

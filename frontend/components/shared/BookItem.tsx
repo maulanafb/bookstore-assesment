@@ -16,10 +16,7 @@ interface BookItemProps {
 
 const BookItem: React.FC<BookItemProps> = ({ book }) => {
   return (
-    <Link
-      href={`/book-detail/${book.id}`}
-      className="flex justify-center items-center"
-    >
+    <Link href={``} className="flex justify-center items-center">
       <div className="flex flex-col px-2 py-2 bg-[#fff] overflow-hidden w-[235px] shadow-md rounded-md">
         {/* image wrapper */}
         <div className="relative w-full h-[235px]">
@@ -46,6 +43,13 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
           <div className="flex items-center gap-2">
             <span className="text-[#fa5d29] font-bold tracking-tighter animate-blink">
               {book.price} Points
+            </span>
+          </div>
+        </div>
+        <div className="flex max-sm:px-1 max-sm:py-1 px-3 py-2 justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium tracking-tighter">
+              {book.tags.map((tag) => `#${tag}, `)}
             </span>
           </div>
         </div>
