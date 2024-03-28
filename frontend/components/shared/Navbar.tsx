@@ -79,7 +79,7 @@ const Navbar = ({ user }: any) => {
             <div
               className={`flex flex-col ${
                 loginMenu ? "absolute" : "hidden"
-              } left-[130px] top-[50px] bg-white rounded-lg px-5 py-3 gap-5 tracking-tighter font-[400] text-[14px]`}
+              } left-[10px] top-[50px] bg-white rounded-lg px-5 py-3 gap-5 tracking-tighter font-[400] text-[14px]`}
             >
               {/* <Link
                 href="/my-books"

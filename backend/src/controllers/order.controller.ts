@@ -6,7 +6,7 @@ const orderService = new OrderService();
 
 /**
  * @swagger
- * /orders:
+ * /api/v1/orders:
  *   post:
  *     summary: Create a new order (Need Token)
  *     description: Creates a new order for a user.
@@ -43,7 +43,6 @@ const orderService = new OrderService();
 router.post("/", async (req: Request, res: Response) => {
   const userId = req.user?.id;
   console.log(req.user);
-  // Lakukan logika Anda dengan userId yang diperoleh
   const { bookId } = req.body;
   try {
     const order = await orderService.createOrder(userId!, bookId);
@@ -56,7 +55,7 @@ router.post("/", async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /orders/{orderId}:
+ * /api/v1/orders/{orderId}:
  *   put:
  *     summary: Cancel an existing order (Need Token)
  *     description: Cancels an order based on its ID.
@@ -100,7 +99,7 @@ router.put("/:orderId", async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /orders:
+ * /api/v1/orders:
  *   get:
  *     summary: Fetch orders for a user (Need Token)
  *     description: Retrieves a list of orders placed by a user.

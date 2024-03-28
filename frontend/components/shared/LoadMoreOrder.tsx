@@ -1,29 +1,22 @@
 "use client";
-import { fetchBook } from "@/app/action";
+import { fetchOrder } from "@/app/order/action";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import BookItem from "./BookItem";
+import BookOrderItem from "./BookOrderItem";
 
 let page = 5;
-interface Book {
-  id: string;
-  title: string;
-  writer: string;
-  coverImage: string;
-  price: number;
-  tags: string[];
-}
+
 export type BookItem = JSX.Element;
 
-function LoadMore() {
+function LoadMoreOrder() {
   const { ref, inView } = useInView();
-  const [data, setData] = useState<Book[]>([]);
+  const [data, setData] = useState<BookItem[]>([]);
   const [hasMoreData, setHasMoreData] = useState<boolean>(true);
 
   useEffect(() => {
     if (inView && hasMoreData) {
-      fetchBook(page).then((res) => {
+      fetchOrder(page).then((res) => {
         if (res.length > 0) {
           setData([...data, ...res]);
           page += 5;
@@ -33,12 +26,21 @@ function LoadMore() {
       });
     }
   }, [inView, data, hasMoreData]);
-
+  console.log(data);
   return (
     <>
-      {data.map((item: Book) => (
-        <BookItem book={item} key={item.id} />
+      {data.map((item: any) => (
+        <BookOrderItem
+          book={item.book}
+          bookId={item.bookId}
+          userId={item.userId}
+          id={item.id}
+          orderDate={item.orderDate}
+          status={item.Status}
+          key={item.id}
+        />
       ))}
+
       {hasMoreData ? (
         <section className="flex justify-center items-center w-full">
           <div ref={ref}>
@@ -52,7 +54,7 @@ function LoadMore() {
           </div>
         </section>
       ) : (
-        <p className="text-center text-gray-500 mt-4 mb-10 col-span-full">
+        <p className="text-center text-gray-500 mt-4 mb-10 block col-span-full">
           No more data
         </p>
       )}
@@ -60,4 +62,4 @@ function LoadMore() {
   );
 }
 
-export default LoadMore;
+export default LoadMoreOrder;

@@ -7,7 +7,7 @@ const bookService = new BookService();
 
 /**
  * @swagger
- * /books:
+ * /api/v1/books:
  *   get:
  *     summary: Retrieve a list of all books
  *     description: Get all books from the database.
@@ -30,7 +30,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 
 /**
  * @swaggerr
- * /books:
+ * /api/v1//books:
  *   post:
  *     summary: Add a new book
  *     description: Add a new book to the database.
@@ -75,7 +75,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
 
 /**
  * @swagger
- * /books/{id}:
+ * /api/v1//books/{id}:
  *   get:
  *     summary: Retrieve a book by ID
  *     description: Get a book from the database by its ID.

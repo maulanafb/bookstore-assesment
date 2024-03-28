@@ -8,7 +8,7 @@ const authService = new AuthService("your-secret-key"); // Inisialisasi AuthServ
 
 /**
  * @swagger
- * /register:
+ * /api/v1//register:
  *   post:
  *     summary: Register new user
  *     description: Register a new user with name, email, and password.

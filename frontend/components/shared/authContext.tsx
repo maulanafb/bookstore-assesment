@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 interface UserData {
   id: number;
   name: string;
-  // Tambahkan properti lain sesuai kebutuhan
+  points: string;
 }
 
 interface AuthContextProps {

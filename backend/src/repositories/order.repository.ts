@@ -27,6 +27,9 @@ export class OrderRepository {
   ): Promise<Order[]> {
     return await prisma.order.findMany({
       where: { userId: reqUserId },
+      include: {
+        book: true, // Include data from the related Book model
+      },
       skip: offset || 0,
       take: limit || 10,
       orderBy: { id: "desc" },

@@ -6,12 +6,11 @@ import { User } from "../entities/user.entity";
 const userService = new UserService();
 
 interface AuthenticatedUser {
-  email: string; // Sesuaikan dengan tipe data ID dari model User Anda
-  // Tambahkan properti lain dari user yang relevan, jika ada
+  email: string;
 }
 
 export const authenticateJWT = async (
-  req: Request & { user?: User }, // Menggunakan tipe User untuk properti user
+  req: Request & { user?: User },
   res: Response,
   next: NextFunction
 ) => {
@@ -31,7 +30,7 @@ export const authenticateJWT = async (
         );
 
         if (userData) {
-          req.user = userData; // Menetapkan userData dengan tipe User
+          req.user = userData;
           next();
         } else {
           res.status(404).json({ message: "User not found" });

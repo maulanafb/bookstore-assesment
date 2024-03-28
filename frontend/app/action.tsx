@@ -20,5 +20,5 @@ export const fetchBook = async (startIndex: number) => {
   const data = await res.json();
   console.log(startIndex);
   //   return data;
-  return data.map((item: Book) => <BookItem book={item} key={item.id} />);
+  return data;
 };

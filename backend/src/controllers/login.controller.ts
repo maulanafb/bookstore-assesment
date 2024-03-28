@@ -7,7 +7,7 @@ const userService = new UserService();
 
 /**
  * @swagger
- * /login:
+ * /api/v1//login:
  *   post:
  *     summary: User Login
  *     description: Login user with email and password.
