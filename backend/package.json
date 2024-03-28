@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon"
+    "start": "nodemon",
+    "seed1": "ts-node src/seeders/databaseSeeder.ts",
+    "seed2": "ts-node src/seeders/orderSeeder.ts",
+    "seed": "npm run seed1 && npm run seed2"
   },
   "keywords": [],
   "author": "",

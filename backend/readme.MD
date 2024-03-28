@@ -2,12 +2,38 @@
 
 This project is a backend for a web application. It is built using Express TypeScript, PostgreSQL, and Prisma.
 
-Features
+## Features
+
 CRUD (Create, Read, Update, Delete) operations for users, books, and orders.
 Authentication and authorization using JWT tokens.
 Pagination and filtering for users, books, and orders.
 
-Setup
-Clone the project repository.
-Install the dependencies with npm install.
-Create a .env file and copy from env.example
+## Setup
+
+Install dependencies:
+
+- npm install
+
+Configure environment variables:
+
+Create a .env file by copying it from env.example
+Set up your PostgreSQL database and update the .env file with the following:
+#adjust it to your PostgresQL database configuration
+
+- DATABASE_URL="postgresql://postgres:password@localhost:5432/testing?schema=public"
+
+Apply database migrations:
+
+- npx prisma migrate dev
+
+Seed the database:
+
+- npm run seed
+
+Start the server:
+
+- npm run start
+
+## Accessing the Backend
+
+The backend server will run on localhost:8000. You can access the API endpoints from your frontend application or a tool like Postman or you can access the swagger in localhost:8000/api/v1/api-docs/.
