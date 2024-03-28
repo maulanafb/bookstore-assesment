@@ -4,62 +4,56 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import BookOrderItem from "./BookOrderItem";
+import { Order } from "@/app/types/bookOrder";
 
-let page = 1;
+let page = 5;
 
 export type BookItem = JSX.Element;
 
 function LoadMoreOrder({ query }: { query: string }) {
   const { ref, inView } = useInView();
+  const [data, setData] = useState<Order[]>([]);
   const [hasMoreData, setHasMoreData] = useState<boolean>(true);
 
   useEffect(() => {
-    // Fungsi untuk memuat data order
     const fetchDataAsync = async () => {
       try {
-        // Panggil fetchOrder dengan query pencarian
         const res = await fetchOrder(page, query);
         if (res.length > 0) {
-          // Render langsung data yang didapat tanpa menyimpannya di state
-          res.forEach((item: any) => {
-            renderBookOrderItem(item);
-          });
-          page += 1; // Tambah 1 ke halaman setelah memuat data
+          setData([...data, ...res]);
+          page += 5;
         } else {
-          setHasMoreData(false); // Set hasMoreData menjadi false jika tidak ada lagi data
+          setHasMoreData(false);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
 
-    // Panggil fetchDataAsync saat komponen masuk ke dalam viewport dan masih ada data yang tersedia
     if (inView && hasMoreData) {
       fetchDataAsync();
     }
-  }, [inView, query, hasMoreData]); // Gunakan query sebagai dependensi efek
+    console.log(data);
+  }, [inView, query]);
 
   // Fungsi untuk merender komponen BookOrderItem
-  const renderBookOrderItem = (item: any) => {
-    return (
-      <BookOrderItem
-        book={item.book}
-        bookId={item.bookId}
-        userId={item.userId}
-        id={item.id}
-        orderDate={item.orderDate}
-        status={item.Status}
-        key={item.id}
-      />
-    );
-  };
 
   return (
     <>
-      {/* Tampilkan indikator loading jika masih ada data yang tersedia */}
+      {data.map((item: Order) => (
+        <BookOrderItem
+          bookId={item.bookId}
+          orderDate={item.orderDate}
+          status={item.status}
+          userId={item.userId}
+          id={item.id}
+          book={item.book}
+          key={item.id}
+        />
+      ))}
       {hasMoreData ? (
-        <section className="flex justify-center items-center w-full" ref={ref}>
-          <div>
+        <section className="flex justify-center items-center w-full">
+          <div ref={ref}>
             <Image
               src="./spinner.svg"
               alt="spinner"

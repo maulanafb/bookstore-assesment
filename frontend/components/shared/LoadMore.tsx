@@ -43,7 +43,7 @@ function LoadMore({
 
     if (inView && hasMoreData) {
       fetchDataAsync();
-      console.log("queryberubah");
+      console.log("query change");
     }
   }, [inView, query]);
 

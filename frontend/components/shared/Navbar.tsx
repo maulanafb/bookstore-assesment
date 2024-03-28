@@ -64,8 +64,16 @@ const Navbar = ({ user }: any) => {
               className=" hidden  lg:flex space-x-6 items-center"
               onClick={() => setLoginMenu(!loginMenu)}
             >
-              <div className="font-[500] tracking-tighter ">
-                Halo, {userData.name}
+              <div className="flex flex-col">
+                <div className="font-[600] text-[16px]">
+                  Halo, {userData.name}
+                </div>
+                <div className="font-[500] tracking-tighter ">
+                  You Have,{" "}
+                  <span className="text-[#fa5d29]">
+                    {userData.points} Points
+                  </span>
+                </div>
               </div>
 
               <Image

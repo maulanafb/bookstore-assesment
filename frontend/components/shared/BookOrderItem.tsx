@@ -8,15 +8,15 @@ interface Book {
   coverImage: string;
   price: number;
   tags: string[];
-  createdAt: string; // Assuming createdAt is a date string
+  createdAt: string;
 }
 
 interface Order {
   id: number;
   userId: number;
   bookId: number;
-  orderDate: string; // Assuming orderDate is a date string
-  status: "cancelled" | "pending" | "completed"; // Assuming status can only be cancelled or pending
+  orderDate: string;
+  status: "cancelled" | "pending" | "completed";
   book: Book;
 }
 
@@ -26,10 +26,7 @@ interface BookItemProps {
 
 const BookOrderItem: React.FC<Order> = (order) => {
   return (
-    <Link
-      href={`/book-detail/${order.id}`}
-      className="flex justify-center items-center"
-    >
+    <Link href={``} className="flex justify-center items-center">
       <div className="flex flex-col px-2 py-2 bg-[#fff] overflow-hidden w-[235px] shadow-md rounded-md">
         {/* image wrapper */}
         <div className="relative w-full h-[235px]">
@@ -59,9 +56,6 @@ const BookOrderItem: React.FC<Order> = (order) => {
             </span>
           </div>
         </div>
-
-        {/* price  */}
-        {/* buy  */}
       </div>
     </Link>
   );
