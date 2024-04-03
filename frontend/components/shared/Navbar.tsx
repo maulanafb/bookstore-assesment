@@ -34,7 +34,7 @@ const Navbar = ({ user }: any) => {
             href={"/"}
             className="font-bold text-lg  px-2 py-1 rounded hover:bg-[#e6e8eb80] hover:text-[#5cc081] transition-all duration-200"
           >
-            BookStore
+            E-Course
           </Link>
 
           <div
