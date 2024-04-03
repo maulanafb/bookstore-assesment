@@ -53,7 +53,7 @@ function Home() {
               Unlock Your Skill&rsquo;s
             </h1>
           </div>
-          <div className="flex py-5 ">All Books</div>
+          <div className="flex py-5 ">All Courses</div>
           <div className="flex justify-center w-[345px] md:w-[1200px] py-2">
             <SearchInput query={query} onSearch={handleSearch} />{" "}
           </div>
